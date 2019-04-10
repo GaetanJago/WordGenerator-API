@@ -5,32 +5,32 @@ const categoryController = require('../controller/Category');
 
 
 module.exports = function (app){
-    app.route('/languages').get(languageController.getAll);
-    app.route('/languages').post(languageController.create);
-    app.route('/languages/:id').get(languageController.get);
-    app.route('/languages/:id').put(languageController.update);
-    app.route('/languages/:id').delete(languageController.remove);
+    app.route('/api/languages').get(languageController.getAll);
+    app.route('/api/languages').post(languageController.create);
+    app.route('/api/languages/:id').get(languageController.get);
+    app.route('/api/languages/:id').put(languageController.update);
+    app.route('/api/languages/:id').delete(languageController.remove);
 
-    app.route('/words').get(wordController.getAll);
-    app.route('/words').post(wordController.create);
-    app.route('/words/:id').get(wordController.get);
-    app.route('/words/:id').put(wordController.update);
-    app.route('/words/:id').delete(wordController.remove);
+    app.route('/api/words').get(wordController.getAll);
+    app.route('/api/words').post(wordController.create);
+    app.route('/api/words/:id').get(wordController.get);
+    app.route('/api/words/:id').put(wordController.update);
+    app.route('/api/words/:id').delete(wordController.remove);
 
-    app.route('/wordsTranslated').get(wordTranslatedController.getAll);
-    app.route('/wordsTranslated').post(wordTranslatedController.create);
-    app.route('/wordsTranslated/:id').get(wordTranslatedController.get);
-    app.route('/wordsTranslated/:id').put(wordTranslatedController.update);
-    app.route('/wordsTranslated/:id').delete(wordTranslatedController.remove);
-    app.route('/wordTranslated').get(wordTranslatedController.findByWordRef);
+    app.route('/api/wordsTranslated').get(wordTranslatedController.getAll);
+    app.route('/api/wordsTranslated').post(wordTranslatedController.create);
+    app.route('/api/wordsTranslated/:id').get(wordTranslatedController.get);
+    app.route('/api/wordsTranslated/:id').put(wordTranslatedController.update);
+    app.route('/api/wordsTranslated/:id').delete(wordTranslatedController.remove);
+    app.route('/api/wordTranslated').get(wordTranslatedController.findByWordRef);
 
-    app.route('/categories').get(categoryController.getAll);
-    app.route('/categories').post(categoryController.create);
-    app.route('/categories/:id').get(categoryController.get);
-    app.route('/categories/:id').put(categoryController.update);
-    app.route('/categories/:id').delete(categoryController.remove);
+    app.route('/api/categories').get(categoryController.getAll);
+    app.route('/api/categories').post(categoryController.create);
+    app.route('/api/categories/:id').get(categoryController.get);
+    app.route('/api/categories/:id').put(categoryController.update);
+    app.route('/api/categories/:id').delete(categoryController.remove);
 
-    app.use(function (req, res){
+    app.use('/api/', function (req, res){
         res.status(404).json({url: req.originalUrl, error: 'not found'});
     });
 };

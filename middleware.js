@@ -5,7 +5,7 @@ let checkToken = (req, res, next) => {
   //console.log(req);
   //let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
   let token = req.headers.cookie;
-  if (token.startsWith('access-token=')) {
+  if (token && token.startsWith('access-token=')) {
     // Remove Bearer from string
     token = token.slice(13, token.length);
     console.log(token);
@@ -20,6 +20,7 @@ let checkToken = (req, res, next) => {
         });
       } else {
         req.decoded = decoded;
+        console.log(decoded);
         //res.sendFile('/home/gaetan/Documents/WordGenerator/GUI/views/admin/language.html');
         //next();
       }

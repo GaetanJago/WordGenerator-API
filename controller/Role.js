@@ -35,6 +35,26 @@ const roleController = {
         role.findByIdAndRemove(req.params.id, function (err, role){
             return respond(err, role, res);
         });
+    },
+    getById: function(id){
+        return new Promise((resolve, reject) => {
+            role.findById(id, function (err, roleFound) {
+                if (err) reject(handleError(err));
+                resolve(roleFound);
+            }); 
+        });
+    },
+    getByLibelle: function(libelle){
+        return new Promise((resolve, reject) => {
+            role.findOne({ libelle: libelle }, function (err, roleFound) {
+                if (err) reject(handleError(err));
+                resolve(roleFound);
+            }); 
+        });
+        /*role.findOne({ libelle: libelle }).exec(function (err, roleFound) {
+            if (err) return handleError(err);
+            return roleFound;
+        });*/ 
     }
 };
 

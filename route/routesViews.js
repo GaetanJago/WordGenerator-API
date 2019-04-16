@@ -19,35 +19,41 @@ module.exports = function (app) {
     });
 
     app.get('/register', function (req, res, next) {
-        console.log('admin language');
         res.sendFile('/home/gaetan/Documents/WordGenerator/GUI/views/register.html');
     });
 
     app.get('/admin/language', function (req, res, next) {
-        console.log('admin language');
         middleware.checkToken(req,res,next,'moderator').then((result) => {
             if(result){
                 res.sendFile('/home/gaetan/Documents/WordGenerator/GUI/views/admin/language.html');
             }
         });
-        
+        /*if(middleware.checkToken(req,res,next,'moderator')){
+            res.sendFile('/home/gaetan/Documents/WordGenerator/GUI/views/admin/language.html');
+        }*/
     });
 
     app.get('/admin/word', function (req, res, next) {
-        console.log('admin language');
-        //middleware.checkToken(req,res,next);
-        res.sendFile('/home/gaetan/Documents/WordGenerator/GUI/views/admin/word.html');
+        middleware.checkToken(req,res,next,'moderator').then((result) => {
+            if(result){
+                res.sendFile('/home/gaetan/Documents/WordGenerator/GUI/views/admin/word.html');
+            }
+        });
     });
 
     app.get('/admin/wordTranslated', function (req, res, next) {
-        console.log('admin language');
-        //middleware.checkToken(req,res,next);
-        res.sendFile('/home/gaetan/Documents/WordGenerator/GUI/views/admin/wordTranslated.html');
+        middleware.checkToken(req,res,next,'moderator').then((result) => {
+            if(result){
+                res.sendFile('/home/gaetan/Documents/WordGenerator/GUI/views/admin/wordTranslated.html');
+            }
+        });
     });
 
     app.get('/admin/category', function (req, res, next) {
-        console.log('admin language');
-        //middleware.checkToken(req,res,next);
-        res.sendFile('/home/gaetan/Documents/WordGenerator/GUI/views/admin/category.html');
+        middleware.checkToken(req,res,next,'moderator').then((result) => {
+            if(result){
+                res.sendFile('/home/gaetan/Documents/WordGenerator/GUI/views/admin/category.html');
+            }
+        });
     });
 };

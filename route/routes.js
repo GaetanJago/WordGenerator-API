@@ -4,8 +4,12 @@ const wordTranslatedController = require('../controller/WordTranslated');
 const categoryController = require('../controller/Category');
 const accountController = require('../controller/Account');
 const roleController = require('../controller/Role');
+let middleware = require('../middleware');
 
 module.exports = function (app){
+    /*app.get('/api/languages', function (req, res, next) {
+        middleware.checkToken(req)
+    });*/
     app.route('/api/languages').get(languageController.getAll);
     app.route('/api/languages').post(languageController.create);
     app.route('/api/languages/:id').get(languageController.get);

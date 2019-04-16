@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const account = mongoose.model('Account', accountSchema);
 const roleSchema = require('../schema/Role');
 const role = mongoose.model('Role', roleSchema);
+const bcrypt = require('bcrypt');
+const saltRounds = 14;
 
 function respond(err, result, res) {
     if (err) {
@@ -18,18 +20,23 @@ const accountController = {
         });
     },
     create: function (req, res) {
-        role.findOne({libelle: req.body.role}, function (err, roleFound) {
-            //console.log(roleFound.accounts);
-            //console.log(newAccount);
+        role.findOne({ libelle: req.body.role }, function (err, roleFound) {
             req.body.role = roleFound._id;
-            const newAccount = new account(req.body);
-            
-            roleFound.accounts.push(newAccount);
-            roleFound.save(function (err, savedAccount) {
-                newAccount.save(function (err, savedAccount) {
-                    return respond(err, savedAccount, res);
+            bcrypt.genSalt(saltRounds, function (err, salt) {
+                bcrypt.hash(req.body.password, salt, function (err, hash) {
+                    // Store hash in your password DB.
+                    req.body.password = hash;
+                    const newAccount = new account(req.body);
+
+                    roleFound.accounts.push(newAccount);
+                    roleFound.save(function (err, savedAccount) {
+                        newAccount.save(function (err, savedAccount) {
+                            return respond(err, savedAccount, res);
+                        });
+                    });
                 });
             });
+
         });
 
     },
@@ -53,9 +60,9 @@ const accountController = {
             account.findOne({ username: username }, 'username password role', function (err, account) {
                 if (err) reject(handleError(err));
                 resolve(account);
-            }); 
+            });
         })
-        
+
     }
 };
 
